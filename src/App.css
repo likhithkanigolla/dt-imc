@@ -36,3 +36,166 @@
     transform: rotate(360deg);
   }
 }
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+#root {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+h3 {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+button {
+  padding: 10px 20px;
+  margin: 5px;
+  border: none;
+  background-color: #15339e;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+div {
+  position: relative;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  gap: 2vw;
+}
+
+.motor-container {
+  position: absolute;
+  top: 6vw;
+  left: 16vw;
+  transform: scaleX(-1);
+}
+
+.valve {
+  position: absolute;
+  cursor: pointer;
+}
+
+.valve-1 {
+  top: 23vw;
+  left: 37.5vw;
+}
+
+.valve-2 {
+  top: 15vw;
+  left: 26vw;
+  transform: rotate(90deg);
+}
+
+.valve-3 {
+  top: 23.3vw;
+  left: 77vw;
+}
+
+.valve-4 {
+  top: 15.5vw;
+  left: 64.3vw;
+  transform: rotate(90deg);
+}
+
+.container-info {
+  position: absolute;
+  text-align: center;
+}
+
+.success {
+  color: green;
+  font-weight: bold;
+}
+
+.error {
+  color: red;
+  font-weight: bold;
+}
+
+.spinning {
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.feedback {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.2em;
+}
+
+
+/* General responsiveness for mobile */
+@media (max-width: 768px) {
+  .motor {
+    width: 20vw;
+  }
+
+  .valve {
+    width: 8vw;
+  }
+
+  .sand-soil-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+}
+
+/* Large screens */
+@media (min-width: 769px) {
+  .motor {
+    width: 4.5vw;
+  }
+
+  .valve {
+    width: 45px;
+  }
+
+  .sand-soil-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 26vw;
+  }
+}
+
+/* Spin animation */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
