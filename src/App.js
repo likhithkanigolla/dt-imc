@@ -7,7 +7,7 @@ import axios from 'axios';
 import Motor from './images/Motor.png';
 import WaterQualityNode from './images/wqn.png';
 import Circuit2 from './images/final4.png';
-import NavigationBar from './components/Navigation/Navigation';
+import NavigationBar from './components/Navigation/Navigation';``
 
 function App() {
   const [isOn, setIsOn] = useState({
