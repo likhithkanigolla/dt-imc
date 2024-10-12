@@ -5,7 +5,7 @@ import App from './App';
 import './index.css';
 
 ReactDOM.render(
-  <BrowserRouter basename="/dtimc">
+  <BrowserRouter>
     <App />
   </BrowserRouter>,
   document.getElementById('root')

@@ -44,6 +44,7 @@ const NavigationBar = () => {
           onChange={handleNavigation}
         >
           <option value="/actuation">Actuation</option>
+
         </select>
       </nav>
     </div>
