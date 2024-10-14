@@ -6,7 +6,7 @@ const app = express();
 app.use(cors());
 
 app.use('/', (req, res) => {
-  const url = 'http://192.168.0.210:2000' + req.url;
+  const url = 'http://100.105.81.115:2000' + req.url;
   req.pipe(request(url)).pipe(res);
 });
 

@@ -32,12 +32,12 @@ function App() {
   // Function to send the contamination request
   const sendContaminationRequest = async (temperature, sumpCapacity, quantity, type) => {
     const apiUrl = type === 'sand' 
-        ? 'http://smartcitylivinglab.iiit.ac.in:1629/calculate_sand_contamination' 
-        : 'http://smartcitylivinglab.iiit.ac.in:1629/calculate_soil_contamination';
+        ? 'https://smartcitylivinglab.iiit.ac.in/zf-backend-api/calculate_sand_contamination' 
+        : 'https://smartcitylivinglab.iiit.ac.in/zf-backend-api/calculate_soil_contamination';
   
     try {
         console.log('Sending request with data:', { temperature, sumpCapacity, quantity, type });
-        const response = await axios.post(apiUrl, {
+        const greenponse = await axios.post(apiUrl, {
             sumpCapacity,
             [`${type === 'sand' ? 'SandQuanitity' : 'SoilQuantiy'}`]: quantity,
             temperature
@@ -48,11 +48,11 @@ function App() {
             }
         });
   
-        console.log('Response received:', response.data, typeof response.data); // Log the response to check structure
+        console.log('greenponse received:', greenponse.data, typeof greenponse.data); // Log the greenponse to check structure
   
-        // Handle the feedback message based on the response
+        // Handle the feedback message based on the greenponse
         if (type === 'soil') {
-            const soilValue = response.data; // Use optional chaining to avoid errors
+            const soilValue = greenponse.data; // Use optional chaining to avoid errors
             console.log('Soil value:', soilValue);
             if (soilValue !== undefined) {
                 const adjustedValue = soilValue - 200;
@@ -61,7 +61,7 @@ function App() {
                 setFeedbackMessage(`TDS Value not received`);
             }
         } else {
-            const sandValue = response.data; // Use optional chaining to avoid errors
+            const sandValue = greenponse.data; // Use optional chaining to avoid errors
             if(quantity === 100){
                 const adjustedValue = sandValue - 94;
                 setFeedbackMessage(`TDS After Contamination : ${adjustedValue}`);
@@ -73,16 +73,16 @@ function App() {
                 const adjustedValue = sandValue - 4;
                 setFeedbackMessage(`TDS After Contamination : ${adjustedValue}`);
             }
-            // const sandMessage = response.data|| 'No Value response';
+            // const sandMessage = greenponse.data|| 'No Value greenponse';
             // setFeedbackMessage(`TDS After Contamination: ${sandMessage}`);
         }
     } catch (error) {
-        if (error.response) {
-            console.error("Error response data:", error.response.data);
-            setFeedbackMessage(`Error: ${error.response.data.message || error.response.statusText}`);
+        if (error.greenponse) {
+            console.error("Error greenponse data:", error.greenponse.data);
+            setFeedbackMessage(`Error: ${error.greenponse.data.message || error.greenponse.statusText}`);
         } else if (error.request) {
             console.error("Error request:", error.request);
-            setFeedbackMessage('Error: No response from the server');
+            setFeedbackMessage('Error: No greenponse from the server');
         } else {
             console.error("Error message:", error.message);
             setFeedbackMessage(`Error: ${error.message}`);
@@ -103,9 +103,13 @@ function App() {
   const sendArrayToBackend = async () => {
     try {
       // Generate array based on motor state and valve states
-      const arrayToSend = `${motorRunning ? 1 : 0}, ${isOn.valve1 ? 0 : 1}, ${isOn.valve3 ? 0 : 1}`;
+      const arrayToSend = [
+        motorRunning ?1:0,
+        isOn.valve1 ?0:1,
+        isOn.valve3 ?0:1
+      ].join(',');
 
-      const response = await axios.post('http://192.168.0.135:8080/~/in-cse/in-name/AE-DT/Control', {
+      const greenponse = await axios.post('http://100.105.81.115:8080/~/in-cse/in-name/AE-DT/Control', {
         "m2m:cin": {
           "lbl": ["Control", "Digital Twin", "Actuation"],
           "con": arrayToSend
@@ -229,9 +233,10 @@ function App() {
         </div>
         <div style={{ textAlign: 'center' }}>
           <h3>Purity Configuration</h3>
-          <button onClick={() => handleSoilClick(15.125,1,200)}>500g</button>
-          <button onClick={() => handleSoilClick(65.125,5,800)}>250g</button>
           <button onClick={() => handleSoilClick(37.125,4,300)}>100g</button>
+          <button onClick={() => handleSoilClick(65.125,5,800)}>250g</button>
+          <button onClick={() => handleSoilClick(15.125,1,200)}>500g</button>
+          
         </div>
       </div>
 
