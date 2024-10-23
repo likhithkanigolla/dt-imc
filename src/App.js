@@ -109,7 +109,7 @@ function App() {
         isOn.valve3 ?0:1
       ].join(',');
 
-      const greenponse = await axios.post('http://dev-onem2m.iiit.ac.in/~/in-cse/in-name/AE-DT/Control', {
+      const greenponse = await axios.post('http://smartcitylivinglab.iiit.ac.in:1631/~/in-cse/in-name/AE-DT/Control', {
         "m2m:cin": {
           "lbl": ["Control", "Digital Twin", "Actuation"],
           "con": arrayToSend

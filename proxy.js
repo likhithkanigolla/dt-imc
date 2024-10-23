@@ -6,10 +6,10 @@ const app = express();
 app.use(cors());
 
 app.use('/', (req, res) => {
-  const url = 'http://100.105.72.39:2000' + req.url;
+  const url = 'http://dev-onem2m.iiit.ac.in:443' + req.url;
   req.pipe(request(url)).pipe(res);
 });
 
-app.listen(8080, () => {
-  console.log('CORS proxy running on port 8080');
+app.listen(1631, () => {
+  console.log('CORS proxy running on port 1631');
 });
