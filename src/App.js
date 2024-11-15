@@ -132,10 +132,12 @@ function App() {
                 setIsOn((prevState) => ({
                     ...prevState,
                     valve1: true, // Close valve1
-                    valve2: false // Open valve2
+                    valve2: false, // Open valve2
+                    valve3: false,
+                    valve4: true
                 }));
                 console.log('Valve1 automatically reset to 0 after 10 seconds');
-            }, 10000); // 10 seconds
+            }, 5000); // 10 seconds
         }
         else{
             console.log('Valve1 is closed');
