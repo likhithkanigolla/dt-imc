@@ -102,32 +102,50 @@ function App() {
 
   const sendArrayToBackend = async () => {
     try {
-      // Generate array based on motor state and valve states
-      const arrayToSend = [
-        motorRunning ?1:0,
-        isOn.valve1 ?0:1,
-        isOn.valve3 ?0:1
-      ].join(',');
+        // Generate array based on motor state and valve states
+        const arrayToSend = [
+            motorRunning ? 1 : 0,
+            isOn.valve1 ? 0 : 1,
+            isOn.valve3 ? 0 : 1
+        ].join(',');
 
-      const greenponse = await axios.post('http://smartcitylivinglab.iiit.ac.in:1631/~/in-cse/in-name/AE-DT/Control', {
-        "m2m:cin": {
-          "lbl": ["Control", "Digital Twin", "Actuation"],
-          "con": arrayToSend
-        }
-      }, {
-        headers: {
-          'X-M2M-Origin': 'AirPoll@20:22uHt@Sas',
-          'Content-Type': 'application/json;ty=4'
-        }
-      });
+        const response = await axios.post('http://smartcitylivinglab.iiit.ac.in:1631/~/in-cse/in-name/AE-DT/Control', {
+            "m2m:cin": {
+                "lbl": ["Control", "Digital Twin", "Actuation"],
+                "con": arrayToSend
+            }
+        }, {
+            headers: {
+                'X-M2M-Origin': 'AirPoll@20:22uHt@Sas',
+                'Content-Type': 'application/json;ty=4'
+            }
+        });
 
-      console.log('Array sent to backend:', arrayToSend);
-      setFeedbackMessage('Success:    Device Actuation Command Sent');
+        console.log('Array sent to backend:', arrayToSend);
+        setFeedbackMessage('Success: Device Actuation Command Sent');
+
+        // Check if valve1 is 1 (open)
+        if (!isOn.valve1) {
+            // Wait for 10 seconds and reset valve1 to 0 (close)
+            console.log('Valve1 is open');
+            setTimeout(() => {
+                setIsOn((prevState) => ({
+                    ...prevState,
+                    valve1: true, // Close valve1
+                    valve2: false // Open valve2
+                }));
+                console.log('Valve1 automatically reset to 0 after 10 seconds');
+            }, 10000); // 10 seconds
+        }
+        else{
+            console.log('Valve1 is closed');
+        }
     } catch (error) {
-      console.error('Error sending array to backend:', error);
-      setFeedbackMessage('Error: Actuation Command Failed');
+        console.error('Error sending array to backend:', error);
+        setFeedbackMessage('Error: Actuation Command Failed');
     }
-  };
+};
+
 
   const toggleMotor = () => {
     const newMotorState = !motorRunning;
