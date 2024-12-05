@@ -10,6 +10,6 @@ app.use('/', (req, res) => {
   req.pipe(request(url)).pipe(res);
 });
 
-app.listen(1631, () => {
-  console.log('CORS proxy running on port 1631');
+app.listen(1626, () => {
+  console.log('CORS proxy running on port 1626');
 });
