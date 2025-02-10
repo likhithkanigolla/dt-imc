@@ -131,7 +131,7 @@ function App() {
             setTimeout(() => {
                 setIsOn((prevState) => ({
                     ...prevState,
-                    valve1: true, // Close valve1
+                    valve1: false, // Prev(Close valve1) Now (Open valve1) 
                     valve2: false, // Open valve2
                     valve3: false,
                     valve4: true
