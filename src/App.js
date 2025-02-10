@@ -132,7 +132,7 @@ function App() {
                 setIsOn((prevState) => ({
                     ...prevState,
                     valve1: false, // Prev(Close valve1) Now (Open valve1) 
-                    valve2: false, // Open valve2
+                    valve2: true, // Open valve2
                     valve3: false,
                     valve4: true
                 }));
