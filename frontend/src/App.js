@@ -1,13 +1,17 @@
-import logo from './logo.svg';
 import './App.css';
 import React, { useState, useEffect } from 'react';
 import { GiWaterTower, GiValve } from "react-icons/gi";
 import { FaArchive } from "react-icons/fa"; 
 import axios from 'axios';
 import Motor from './images/Motor.png';
-import WaterQualityNode from './images/wqn.png';
 import Circuit2 from './images/final4.png';
 import NavigationBar from './components/Navigation/Navigation';
+
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+const CONTROL_URL = process.env.REACT_APP_CONTROL_URL;
+const SAND_CONTAMINATION_URL = process.env.REACT_APP_SAND_CONTAMINATION;
+const SOIL_CONTAMINATION_URL = process.env.REACT_APP_SOIL_CONTAMINATION;
+const M2M_ORIGIN = process.env.REACT_APP_M2M_ORIGIN;
 
 function App() {
   const [isOn, setIsOn] = useState({
@@ -32,8 +36,8 @@ function App() {
   // Function to send the contamination request
   const sendContaminationRequest = async (temperature, sumpCapacity, quantity, type) => {
     const apiUrl = type === 'sand' 
-        ? 'https://smartcitylivinglab.iiit.ac.in/zf-backend-api/calculate_sand_contamination' 
-        : 'https://smartcitylivinglab.iiit.ac.in/zf-backend-api/calculate_soil_contamination';
+        ? SAND_CONTAMINATION_URL
+        : SOIL_CONTAMINATION_URL;
   
     try {
         console.log('Sending request with data:', { temperature, sumpCapacity, quantity, type });
@@ -73,8 +77,6 @@ function App() {
                 const adjustedValue = sandValue - 4;
                 setFeedbackMessage(`TDS After Contamination : ${adjustedValue}`);
             }
-            // const sandMessage = greenponse.data|| 'No Value greenponse';
-            // setFeedbackMessage(`TDS After Contamination: ${sandMessage}`);
         }
     } catch (error) {
         if (error.greenponse) {
@@ -109,14 +111,14 @@ function App() {
             isOn.valve3 ? 0 : 1
         ].join(',');
 
-        const response = await axios.post('http://smartcitylivinglab.iiit.ac.in:1626/~/in-cse/in-name/AE-DT/Control', {
+        await axios.post(CONTROL_URL, {
             "m2m:cin": {
                 "lbl": ["Control", "Digital Twin", "Actuation"],
                 "con": arrayToSend
             }
         }, {
             headers: {
-                'X-M2M-Origin': 'AirPoll@20:22uHt@Sas',
+                'X-M2M-Origin': M2M_ORIGIN,
                 'Content-Type': 'application/json;ty=4'
             }
         });
@@ -139,6 +141,7 @@ function App() {
                 console.log('Valve1 automatically reset to 0 after 10 seconds');
             }, 5000); // 10 seconds
         }
+        
         else{
             console.log('Valve1 is closed');
         }
